@@ -5,8 +5,7 @@ on:
     inputs:
       environment:
         description: 'Environment to deploy to'
-        required: true
-        
+        required: true       
  jobs:
   Build:
     runs-on: ubuntu-latest
