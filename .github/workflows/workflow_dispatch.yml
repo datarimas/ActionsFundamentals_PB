@@ -1,0 +1,21 @@
+name: Staged Deployments
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+
+jobs:
+  Build:
+    # Configurações do job Build
+
+  Test:
+    # Configurações do job Test
+
+  Load-Test:
+    # Configurações do job Load-Test
+
+  Production:
+    # Configurações do job Production
