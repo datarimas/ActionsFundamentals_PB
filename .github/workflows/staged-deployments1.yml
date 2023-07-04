@@ -1,0 +1,41 @@
+name: Staged Deployments 1
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+
+jobs:
+  Build:
+    # Configurações do job Build
+
+  Test:
+    needs: Build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Run Test
+        run: echo "🧪 Testing..."
+
+  Load-Test:
+    needs: Build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Run Load Test
+        run: |
+          echo "🧪 Testing..."
+          sleep 15
+
+  Production:
+    needs: [Test, Load-Test]
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.environment == 'Production' }}
+    steps:
+      - name: Deploy to Production
+        run: |
+          echo "🚀 Step 1..."
+          sleep 10
+      # Adicione os outros passos de implantação
