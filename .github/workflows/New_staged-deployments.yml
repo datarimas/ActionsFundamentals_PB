@@ -9,7 +9,10 @@ on:
 
 jobs:
   Build:
-    # Configurações do job Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Step
+        run: echo "Building..."
 
   Test:
     needs: Build
@@ -38,4 +41,4 @@ jobs:
         run: |
           echo "🚀 Step 1..."
           sleep 10
-      # Adicione os outros passos de implantação
+      # Add other deployment steps
