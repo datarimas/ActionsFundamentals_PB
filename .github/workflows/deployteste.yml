@@ -1,0 +1,56 @@
+name: Deployments em Estágios
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Ambiente para implantar'
+        required: true
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do Código
+        uses: actions/checkout@v2
+      
+      - name: Configurar Ambiente de Build
+        # Adicione os comandos para configurar o ambiente de build, como instalação de dependências, configurações, etc.
+        run: |
+          echo "Configurando o ambiente de build..."
+          # Comandos adicionais aqui
+
+      - name: Build do Projeto
+        # Adicione os comandos para executar o processo de build
+        run: |
+          echo "Iniciando o processo de build..."
+          # Comandos adicionais aqui
+
+  Test:
+    needs: Build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Executar Teste
+        run: echo "🧪 Testando..."
+
+  Load-Test:
+    needs: Build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Executar Teste de Carga
+        run: |
+          echo "🧪 Testando..."
+          sleep 15
+
+  Production:
+    needs: [Test, Load-Test]
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.environment == 'Production' }}
+    steps:
+      - name: Implantar na Produção
+        run: |
+          echo "🚀 Etapa 1..."
+          sleep 10
+      # Adicione as demais etapas de implantação
