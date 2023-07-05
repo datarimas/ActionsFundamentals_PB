@@ -1,4 +1,4 @@
-name: Staged Deployments 1
+name: Staged Deployments 3
 
 on:
   workflow_dispatch:
@@ -8,10 +8,9 @@ on:
         required: true
 
 jobs:
-  Build:
-    # Configurações do job Build
 
-  Test:
+ Build:
+   Test:
     needs: Build
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
@@ -19,7 +18,7 @@ jobs:
       - name: Run Test
         run: echo "🧪 Testing..."
 
-  Load-Test:
+   Load-Test:
     needs: Build
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
@@ -29,7 +28,7 @@ jobs:
           echo "🧪 Testing..."
           sleep 15
 
-  Production:
+   Production:
     needs: [Test, Load-Test]
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.environment == 'Production' }}
